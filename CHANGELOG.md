@@ -1,5 +1,35 @@
 # 📝 Registro de Mudanças
 
+## [1.1.0] - 2025-11-16
+
+### 📚 Documentação Aprimorada
+- **README.md completamente reestruturado** com contexto acadêmico
+  - Adicionada seção sobre autores e colaboradores
+  - Incluído contexto da tese de doutorado
+  - Fundamentação teórica detalhada (SLR com 103 estudos)
+  - Diagrama de arquitetura visual do sistema
+  - Tabelas detalhadas das 25 boas práticas (CS + LS)
+  - Metodologia de avaliação explicada
+  - Seção de contribuição acadêmica
+  - Referências bibliográficas
+  - Como citar o trabalho (BibTeX)
+  - Roadmap futuro
+  - Agradecimentos
+
+### 🎓 Contexto Acadêmico
+- Vinculação clara com a pesquisa de doutorado na UFSCar
+- Explicação da fundamentação teórica (40 práticas → 25 implementadas)
+- Validação empírica mencionada
+- Aportes científicos destacados
+
+### 📊 Melhorias Visuais
+- Diagrama ASCII da arquitetura do sistema
+- Tabelas organizadas para as práticas CS e LS
+- Estrutura de diretórios mais clara
+- Emojis para melhor navegação
+
+---
+
 ## [1.0.0] - 2025-11-16
 
 ### ✨ Adicionado

@@ -1,4 +1,9 @@
-# 🚀 Guia Rápido de Início
+# 🚀 Guia Rápido de Início - TAI-EvalGenTCS
+
+**Test AI Evaluator and Generator of Test Case Suites**
+Ferramenta de pesquisa desenvolvida na UFSCar
+
+---
 
 ## Passos Rápidos para Executar o Projeto
 

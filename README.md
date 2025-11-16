@@ -1,48 +1,157 @@
-# 🧪 Test Case Evaluator - UFSCar
+# 🧪 TAI-EvalGenTCS - Test AI Evaluator and Generator of Test Case Suites
 
-Sistema de avaliação de casos de teste baseado em 25 melhores práticas de engenharia de software, utilizando OpenAI Assistants API.
+**Ferramenta de Avaliação e Geração de Casos de Teste baseada em Inteligência Artificial**
 
-## 📋 Descrição do Projeto
+Desenvolvida como parte da pesquisa de doutorado na **Universidade Federal de São Carlos (UFSCar)** sobre estratégias e ferramentas de suporte para geração de testes baseados em boas práticas de engenharia de software.
+
+---
+
+## 👥 Autores e Colaboradores
+
+- **Camilo Hernán Villota Ibarra** - Autor Principal e Pesquisador
+- **Auri Marcelo Rizzo Vincenzi** - Orientador
+- **José Carlos Maldonado** - Co-orientador
+- **Pedro Henrique Kuroishi** - Colaboração Conceitual
+
+---
+
+## 📋 Sobre o Projeto
+
+### Contexto Acadêmico
+
+Este projeto é uma implementação prática da tese de doutorado *"Towards a strategy and tool support for test generation based on good software testing practices: classification and prioritization"*, que aborda a lacuna existente entre a **quantidade de testes automatizados** e a **qualidade real dos casos de teste**.
+
+### Fundamentação Teórica
+
+A ferramenta está fundamentada em uma **Revisão Sistemática da Literatura (SLR)** que:
+- Identificou **131 práticas** de testes de software em 103 estudos primários
+- Refinou e sintetizou essas práticas em **40 boas práticas essenciais**
+- Validou empiricamente através de pesquisa com testers profissionais
+- Classificou as práticas em categorias orientadas e não-orientadas a código
+
+### Implementação Atual
+
+Esta versão da ferramenta **TAI-EvalGenTCS** implementa **25 boas práticas fundamentais** divididas em:
+
+- **Common Sense (CS)**: 14 práticas de senso comum validadas pela indústria
+- **Literature Supported (LS)**: 11 práticas respaldadas por pesquisas acadêmicas
+
+---
+
+## 🎯 Objetivos da Ferramenta
+
+A TAI-EvalGenTCS foi desenvolvida para:
+
+1. **Avaliar a qualidade do design** de casos de teste existentes
+2. **Detectar más práticas** ou testes pouco efetivos
+3. **Gerar versões otimizadas** de casos de teste automaticamente
+4. **Fornecer feedback detalhado** sobre conformidade com boas práticas
+5. **Apoiar desenvolvedores e testers** na criação de testes mais manteníveis e modulares
+
+---
+
+## 🏗️ Arquitetura do Sistema
 
 Este projeto é composto por duas aplicações que trabalham em conjunto:
 
-- **Backend (API)**: Servidor Node.js/Express que atua como intermediário com a OpenAI Assistants API
-- **Frontend**: Interface web desenvolvida em Vue.js 3 + Vite + Tailwind CSS
+### Backend (API)
+- **Tecnologia**: Node.js/Express
+- **Função**: Servidor que atua como intermediário com a OpenAI Assistants API
+- **Modelo IA**: GPT-4 Turbo configurado especificamente para análise de testes
 
-O sistema permite que desenvolvedores e estudantes avaliem a qualidade de seus casos de teste contra 25 melhores práticas divididas em duas categorias:
-- **Common Sense (CS)**: 14 práticas de senso comum
-- **Literature Supported (LS)**: 11 práticas respaldadas por literatura acadêmica
+### Frontend (Interface Web)
+- **Tecnologia**: Vue.js 3 + Vite + Tailwind CSS
+- **Função**: Interface intuitiva para submissão e visualização de resultados
 
-## 🎯 Funcionalidades
+---
 
-- ✅ Avaliação automática de código de teste em múltiplas linguagens (Python, Java, JavaScript, C++, etc.)
-- ✅ Análise baseada em 25 melhores práticas de testes de software
-- ✅ Pontuação de conformidade por categoria e geral
-- ✅ Sugestão de código melhorado
-- ✅ Interface intuitiva e responsiva
-- ✅ Cópia rápida do código sugerido
+## ✨ Funcionalidades Principais
 
-## 🏗️ Arquitetura
+- ✅ **Avaliação automática** de código de teste em múltiplas linguagens (Python, Java, JavaScript, C++, etc.)
+- ✅ **Análise baseada em 25 boas práticas** validadas academicamente
+- ✅ **Compliance Score** - Pontuação de conformidade geral e por categoria
+- ✅ **Breakdown detalhado** - Análise prática por prática (✔️ Cumprida / ❌ Não cumprida / ⚪ Não aplicável)
+- ✅ **Geração inteligente** de código de teste otimizado
+- ✅ **Explicações contextuais** sobre violações e melhorias
+- ✅ **Interface responsiva** e intuitiva
+- ✅ **Cópia rápida** do código sugerido
+
+## 🏗️ Arquitetura do Sistema
+
+### Visão Geral
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    USUÁRIO (Tester/Dev)                     │
+└────────────────────────┬────────────────────────────────────┘
+                         │
+                         ▼
+┌─────────────────────────────────────────────────────────────┐
+│              FRONTEND (Vue.js 3 + Tailwind)                 │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  • Interface de entrada de código                   │   │
+│  │  • Visualização de resultados                       │   │
+│  │  • Breakdown de práticas (CS + LS)                  │   │
+│  │  • Exibição de código otimizado                     │   │
+│  └─────────────────────────────────────────────────────┘   │
+└────────────────────────┬────────────────────────────────────┘
+                         │ HTTP/REST
+                         ▼
+┌─────────────────────────────────────────────────────────────┐
+│              BACKEND (Node.js + Express)                    │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  • Gerenciamento de threads OpenAI                  │   │
+│  │  • Envio de mensagens ao assistente                 │   │
+│  │  • Processamento de respostas                       │   │
+│  │  • Validação de JSON                                │   │
+│  └─────────────────────────────────────────────────────┘   │
+└────────────────────────┬────────────────────────────────────┘
+                         │ OpenAI API
+                         ▼
+┌─────────────────────────────────────────────────────────────┐
+│           OPENAI ASSISTANTS API (GPT-4 Turbo)               │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  • Análise de código de teste                       │   │
+│  │  • Comparação com 25 boas práticas                  │   │
+│  │  • Cálculo de Compliance Score                      │   │
+│  │  • Geração de código otimizado                      │   │
+│  │  • Explicações contextuais                          │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Estrutura de Diretórios
 
 ```
 villota-practices/
-├── api-practices/          # Backend (Node.js + Express)
-│   ├── server.js          # Servidor principal
-│   ├── package.json       # Dependências do backend
-│   ├── Dockerfile         # Configuração Docker do backend
-│   └── .env.example       # Template de variáveis de ambiente
+├── 📄 README.md                    # Documentação principal
+├── 📄 QUICK_START.md               # Guia rápido de início
+├── 📄 CHANGELOG.md                 # Registro de mudanças
+├── 📄 docker-compose.yml           # Orquestração Docker
+├── 📄 .env.example                 # Template de variáveis de ambiente
 │
-├── code-evaluator/        # Frontend (Vue.js 3)
-│   ├── src/              # Código fonte
-│   ├── public/           # Arquivos públicos
-│   ├── package.json      # Dependências do frontend
-│   ├── Dockerfile        # Configuração Docker do frontend
-│   ├── nginx.conf        # Configuração do Nginx
-│   └── .env.example      # Template de variáveis de ambiente
+├── 📁 api-practices/               # Backend (Node.js + Express)
+│   ├── 📄 server.js               # Servidor principal com rotas da API
+│   ├── 📄 package.json            # Dependências do backend
+│   ├── 📄 Dockerfile              # Configuração Docker do backend
+│   ├── 📄 .env.example            # Template de variáveis de ambiente
+│   └── 📄 .gitignore              # Arquivos ignorados pelo Git
 │
-├── docker-compose.yml    # Orquestração dos containers
-├── .env.example          # Template de variáveis de ambiente global
-└── README.md            # Este arquivo
+└── 📁 code-evaluator/             # Frontend (Vue.js 3)
+    ├── 📁 src/
+    │   ├── 📄 App.vue             # Componente raiz
+    │   ├── 📄 main.js             # Ponto de entrada da aplicação
+    │   ├── 📁 components/
+    │   │   └── 📄 CodeEvaluator.vue  # Componente principal de avaliação
+    │   ├── 📁 router/
+    │   │   └── 📄 index.js        # Configuração de rotas
+    │   └── 📁 assets/             # Recursos estáticos (CSS, imagens)
+    ├── 📁 public/                 # Arquivos públicos
+    ├── 📄 package.json            # Dependências do frontend
+    ├── 📄 Dockerfile              # Build multi-stage com Nginx
+    ├── 📄 nginx.conf              # Configuração do servidor web
+    ├── 📄 .env.example            # Template de variáveis de ambiente
+    └── 📄 vite.config.js          # Configuração do Vite
 ```
 
 ## 🚀 Requisitos Previos
@@ -346,59 +455,271 @@ npm run dev
 ## 📊 Tecnologias Utilizadas
 
 ### Backend
-- Node.js 18
-- Express.js
-- OpenAI SDK
-- CORS
-- dotenv
+- **Node.js 18** - Runtime JavaScript
+- **Express.js** - Framework web minimalista
+- **OpenAI SDK** - Integração com GPT-4 Turbo
+- **CORS** - Controle de acesso entre origens
+- **dotenv** - Gerenciamento de variáveis de ambiente
 
 ### Frontend
-- Vue.js 3
-- Vite
-- Tailwind CSS
-- Axios
-- Vue Router
-- Prism.js (syntax highlighting)
+- **Vue.js 3** - Framework progressivo JavaScript
+- **Vite** - Build tool de nova geração
+- **Tailwind CSS** - Framework CSS utility-first
+- **Axios** - Cliente HTTP
+- **Vue Router** - Roteamento oficial do Vue
+- **Prism.js** - Syntax highlighting para código
 
 ### DevOps
-- Docker
-- Docker Compose
-- Nginx (servidor web para o frontend)
-
-## 📝 Estrutura das 25 Melhores Práticas
-
-### Common Sense (CS) - 14 práticas
-- CS-01 a CS-14: Práticas fundamentais de senso comum para testes
-
-### Literature Supported (LS) - 11 práticas
-- LS-01 a LS-11: Práticas respaldadas por pesquisas acadêmicas
-
-Para detalhes completos de cada prática, consulte o System Prompt do assistente na seção de configuração.
-
-## 🤝 Contribuindo
-
-Contribuições são bem-vindas! Sinta-se à vontade para:
-- Reportar bugs
-- Sugerir novas funcionalidades
-- Melhorar a documentação
-- Enviar pull requests
-
-## 📄 Licença
-
-Este projeto foi desenvolvido para fins educacionais na UFSCar (Universidade Federal de São Carlos).
-
-## 👥 Autores
-
-Desenvolvido por estudantes e pesquisadores da UFSCar.
-
-## 📞 Suporte
-
-Para questões e suporte:
-- Abra uma issue no repositório
-- Entre em contato com a equipe de desenvolvimento
+- **Docker** - Containerização
+- **Docker Compose** - Orquestração multi-container
+- **Nginx** - Servidor web de alta performance
 
 ---
 
-**Nota**: Este projeto utiliza a API da OpenAI, que é um serviço pago. Certifique-se de monitorar seu uso e custos na [plataforma OpenAI](https://platform.openai.com/usage).
+## 📝 As 25 Boas Práticas Implementadas
+
+### Fundamentação
+
+As práticas implementadas nesta ferramenta são resultado de:
+1. **Revisão Sistemática da Literatura** - 103 estudos primários analisados
+2. **Validação empírica** - Pesquisa com testers profissionais
+3. **Classificação e priorização** - Baseada em relevância e aplicabilidade
+
+### Categorias
+
+#### 🔵 Common Sense Practices (CS) - 14 práticas
+
+Práticas fundamentais validadas pela experiência da indústria:
+
+| ID | Prática | Foco |
+|---|---|---|
+| **CS-01** | Especificação Atômica de Casos de Teste | Cada teste deve focar em um único requisito |
+| **CS-02** | Independência Completa de Casos de Teste | Testes não devem depender uns dos outros |
+| **CS-03** | Cobertura de Fluxos Normais e Excepcionais | Testar cenários normais e casos extremos |
+| **CS-04** | Análise de Valores Limite | Validar entradas nos limites mínimo/máximo |
+| **CS-05** | Modularidade Completa de Casos de Teste | Testes auto-contidos e reutilizáveis |
+| **CS-06** | Análise Detalhada de Tamanho e Complexidade | Manter testes pequenos e focados |
+| **CS-07** | Design Complexo para Detecção de Falhas | Alguns testes complexos são necessários |
+| **CS-08** | Manutenção Completa do Código de Teste | Código de teste deve ser mantido regularmente |
+| **CS-09** | Rastreabilidade Completa de Casos de Teste | Cada teste vinculado a um requisito |
+| **CS-10** | Uso Rigoroso de Testes de Performance e Segurança | Testes não-funcionais separados |
+| **CS-11** | Revisão Regular de Casos de Teste | Revisão periódica para acompanhar mudanças |
+| **CS-12** | Compreensão Clara de Casos de Teste | Propósito claro e inequívoco |
+| **CS-13** | Cobertura Estruturada do Processo de Teste | Abordagens estruturadas de integração |
+| **CS-14** | Garantia Completa da Qualidade do Código de Teste | Uso de métricas de cobertura |
+
+#### 🟢 Literature Supported Practices (LS) - 11 práticas
+
+Práticas respaldadas por pesquisas acadêmicas:
+
+| ID | Prática | Foco |
+|---|---|---|
+| **LS-01** | Utilização Adequada de Cobertura de Código | Alta cobertura ≠ testes efetivos |
+| **LS-02** | Utilização Necessária de Testes Ausentes | Identificar e criar testes faltantes |
+| **LS-03** | Utilização Eficiente de Cobertura de Código | Incluir padrões de falha e casos extremos |
+| **LS-04** | Pegada Pequena de Geração de Código de Teste | Testes devem executar rapidamente |
+| **LS-05** | Priorização Completa do Design de Casos de Teste | Priorizar baseado em requisitos |
+| **LS-06** | Adição Responsável de Manutenção de Código de Teste | Manter suite atualizada com bugs corrigidos |
+| **LS-07** | Utilização Adequada de Asserções de Teste | Usar asserções efetivamente |
+| **LS-08** | Adição Responsável de Comentários de Depuração | Documentar padrões de falha |
+| **LS-09** | Design Determinístico de Resultados de Teste | Mesmos inputs = mesmos resultados |
+| **LS-10** | Evitar Completamente Efeitos Colaterais de Teste | Não modificar estado compartilhado |
+| **LS-11** | Utilização Adequada de Rótulos e Categorias | Organizar testes com labels |
+
+### Metodologia de Avaliação
+
+Para cada caso de teste submetido, o assistente de IA:
+
+1. **Analisa o código** linha por linha
+2. **Compara** com cada uma das 25 práticas
+3. **Classifica** cada prática como:
+   - ✔️ **Cumprida** - A prática está sendo seguida
+   - ❌ **Não cumprida** - A prática está sendo violada
+   - ⚪ **Não aplicável** - A prática não se aplica ao contexto
+4. **Calcula** o Compliance Score: `(Práticas cumpridas / 25) × 100`
+5. **Gera** uma versão otimizada do código
+6. **Explica** cada violação e melhoria sugerida
+
+> 📖 **Para detalhes completos de cada prática com exemplos**, consulte [PRACTICES.md](PRACTICES.md)
+
+---
+
+## 🎓 Contribuição Acadêmica
+
+Esta ferramenta representa uma ponte entre:
+- **Teoria** - Boas práticas consolidadas da literatura
+- **Prática** - Aplicação real através de IA generativa
+
+### Aportes Principais
+
+1. **Marco teórico validado** - Catálogo de boas práticas inexistente até agora
+2. **Ferramenta inovadora** - Combina avaliação + geração inteligente
+3. **Evidência empírica** - Validação com projetos reais
+4. **Apoio automatizado** - Reduz barreira de entrada para testes de qualidade
+
+### Publicações Relacionadas
+
+Esta ferramenta é parte da pesquisa de doutorado em andamento na UFSCar. Publicações e resultados serão disponibilizados conforme o progresso da pesquisa.
+
+## 🤝 Contribuindo
+
+Contribuições são bem-vindas! Esta é uma ferramenta de pesquisa em desenvolvimento ativo.
+
+### Como Contribuir
+
+- 🐛 **Reportar bugs** - Abra uma issue detalhando o problema
+- 💡 **Sugerir funcionalidades** - Proponha melhorias baseadas em evidências
+- 📖 **Melhorar documentação** - Ajude a tornar o projeto mais acessível
+- 🔬 **Validação empírica** - Compartilhe resultados de uso em projetos reais
+- 🧪 **Casos de teste** - Contribua com exemplos de boas/más práticas
+
+### Diretrizes
+
+- Mantenha a coerência com a fundamentação teórica
+- Cite fontes acadêmicas quando aplicável
+- Priorize evidências empíricas sobre opiniões
+- Respeite as 25 práticas fundamentais implementadas
+
+---
+
+## 📚 Referências Acadêmicas
+
+### Tese Principal
+
+**Villota Ibarra, C. H.** (Em andamento). *Towards a strategy and tool support for test generation based on good software testing practices: classification and prioritization*. Tese de Doutorado, Universidade Federal de São Carlos (UFSCar), São Carlos, Brasil.
+
+### Fundamentação Teórica
+
+A ferramenta está baseada em:
+- **Revisão Sistemática da Literatura** - 103 estudos primários sobre boas práticas de teste
+- **Validação empírica** - Pesquisa com testers profissionais da indústria
+- **Experimentação controlada** - Avaliação com 16 projetos Java reais
+
+### Metodologia
+
+- **Classificação de práticas** - Taxonomia estruturada (code-oriented vs no-code-oriented)
+- **Priorização** - Baseada em clareza, relevância e aplicabilidade
+- **Validação** - Comparação de qualidade antes/depois da otimização por IA
+
+---
+
+## 📄 Licença
+
+Este projeto foi desenvolvido para fins de **pesquisa acadêmica** na **Universidade Federal de São Carlos (UFSCar)**.
+
+### Uso Acadêmico
+
+- ✅ Permitido para pesquisa e educação
+- ✅ Citação obrigatória em trabalhos derivados
+- ✅ Modificações devem manter referência ao trabalho original
+
+### Uso Comercial
+
+Para uso comercial ou industrial, entre em contato com os autores.
+
+---
+
+## 👥 Equipe de Pesquisa
+
+### Autor Principal
+**Camilo Hernán Villota Ibarra**
+Doutorando em Ciência da Computação
+Universidade Federal de São Carlos (UFSCar)
+📧 [Contato via GitHub Issues]
+
+### Orientação
+**Prof. Dr. Auri Marcelo Rizzo Vincenzi** - Orientador
+**Prof. Dr. José Carlos Maldonado** - Co-orientador
+
+### Colaboração
+**Pedro Henrique Kuroishi** - Colaboração Conceitual
+
+---
+
+## 📞 Suporte e Contato
+
+### Para Questões Técnicas
+- 🐛 Abra uma **issue** no repositório
+- 📖 Consulte a documentação completa (README.md, QUICK_START.md)
+- 🔍 Verifique a seção de **Troubleshooting**
+
+### Para Colaboração Acadêmica
+- 📧 Entre em contato através do repositório
+- 🎓 Cite este trabalho em suas pesquisas
+- 🤝 Proponha colaborações de pesquisa
+
+### Para Uso Industrial
+- 💼 Entre em contato para discutir casos de uso
+- 📊 Compartilhe resultados de validação
+- 🔬 Participe de estudos empíricos
+
+---
+
+## ⚠️ Notas Importantes
+
+### Sobre a API OpenAI
+
+Este projeto utiliza a **OpenAI API**, que é um **serviço pago**:
+- 💰 Monitore seu uso em: [platform.openai.com/usage](https://platform.openai.com/usage)
+- 🔑 Mantenha sua API key segura (nunca commite no Git)
+- 📊 Modelo utilizado: **GPT-4 Turbo** (custo por token)
+
+### Sobre os Resultados
+
+- ⚠️ A ferramenta é um **apoio à decisão**, não substitui análise humana
+- 🎯 Resultados dependem da qualidade do prompt e configuração do assistente
+- 🔬 Validação contínua com casos reais é recomendada
+- 📈 Feedback de uso ajuda a melhorar a ferramenta
+
+---
+
+## 🔮 Roadmap Futuro
+
+### Curto Prazo
+- [ ] Suporte para mais linguagens de programação
+- [ ] Métricas adicionais de qualidade (mutation score, etc.)
+- [ ] Integração com ferramentas de CI/CD
+- [ ] API pública para integração
+
+### Médio Prazo
+- [ ] Expansão para as 40 práticas completas da tese
+- [ ] Modo batch para análise de múltiplos arquivos
+- [ ] Relatórios exportáveis (PDF, JSON)
+- [ ] Dashboard de métricas históricas
+
+### Longo Prazo
+- [ ] Fine-tuning de modelo específico para testes
+- [ ] Detecção automática de anti-patterns
+- [ ] Sugestões de refatoração de suites completas
+- [ ] Integração com IDEs (VS Code, IntelliJ)
+
+---
+
+## 🙏 Agradecimentos
+
+- **UFSCar** - Universidade Federal de São Carlos
+- **Programa de Pós-Graduação em Ciência da Computação**
+- **Laboratório de Engenharia de Software**
+- **OpenAI** - Pela disponibilização da API GPT-4 Turbo
+- **Comunidade de testers** que participou da validação empírica
+
+---
+
+## 📖 Como Citar Este Trabalho
+
+```bibtex
+@phdthesis{villota2024tai,
+  author = {Villota Ibarra, Camilo Hernán},
+  title = {Towards a strategy and tool support for test generation based on good software testing practices: classification and prioritization},
+  school = {Universidade Federal de São Carlos},
+  year = {2024},
+  address = {São Carlos, Brasil},
+  note = {Tese de Doutorado em andamento}
+}
+```
+
+---
+
+**Desenvolvido com 🧪 na UFSCar | Pesquisa em Engenharia de Software e Qualidade de Testes**
 
 
